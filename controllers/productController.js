@@ -1,4 +1,4 @@
-import Product from "../models/Product.js";
+import Product from "../models/product.js";
 
 // =================== CREATE PRODUCT ===================
 export const createProduct = async (req, res) => {
@@ -34,7 +34,7 @@ export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find()
       .populate("seller", "username email")
-      .sort({ createdAt: -1 }); // newest first
+      .sort({ createdAt: -1 });
     res.json({ products });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -46,7 +46,7 @@ export const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate(
       "seller",
-      "username email"
+      "username email",
     );
 
     if (!product) return res.status(404).json({ message: "Product not found" });
@@ -99,7 +99,7 @@ export const deleteProduct = async (req, res) => {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
-    await product.remove();
+    await Product.findByIdAndDelete(req.params.id);
 
     res.json({ message: "Product deleted" });
   } catch (error) {

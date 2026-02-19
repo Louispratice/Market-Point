@@ -18,15 +18,17 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: [{
-      type: String,
-    }],
+    images: [
+      {
+        type: String,
+      },
+    ],
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("Product", productSchema);
